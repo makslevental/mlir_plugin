@@ -1,0 +1,12 @@
+PyYAML
+cibuildwheel
+cmake
+ninja
+numpy
+pip
+pybind11
+setuptools>=42
+wheel
+# auditwheel
+# patchelf
+# delocate-wheel
