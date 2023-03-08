@@ -1,0 +1,22 @@
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(CMAKE_CXX_FLAGS "-undefined dynamic_lookup")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(CMAKE_CXX_FLAGS "-Wl,--unresolved-symbols=ignore-all")
+endif ()
+
+# disable RTTI since LLVM is not compiled with RTTI
+if (NOT LLVM_ENABLE_RTTI)
+    if (MSVC)
+        string(REGEX REPLACE "/GR" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /GR-")
+    else ()
+        string(REGEX REPLACE "-frtti" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
+    endif ()
+endif ()
+
+add_library(mlir_plugin SHARED mlir_plugin.cpp DummyPass.cpp)
+set_property(TARGET mlir_plugin PROPERTY POSITION_INDEPENDENT_CODE ON)
+install(TARGETS mlir_plugin LIBRARY DESTINATION "${CMAKE_SOURCE_DIR}/pure")
+#add_executable(mlir_plugin_exe mlir_plugin.cpp DummyPass.cpp)
+#install(TARGETS mlir_plugin_exe RUNTIME DESTINATION "${CMAKE_SOURCE_DIR}/pure")

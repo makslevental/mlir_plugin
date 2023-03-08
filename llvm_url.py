@@ -14,7 +14,7 @@ def get_llvm_url():
         LIB_ARCH = "arm64"
     LLVM_RELEASE_VERSION = os.environ.get("LLVM_RELEASE_VERSION", "17.0.0")
     assert LLVM_RELEASE_VERSION, "empty LLVM_RELEASE_VERSION"
-    name = f"llvm+mlir+openmp-{sys.version_info.major}.{sys.version_info.minor}-{LLVM_RELEASE_VERSION}-{LIB_ARCH}-{system_suffix}-release"
+    name = f"llvm+mlir+openmp-visible-{sys.version_info.major}.{sys.version_info.minor}-{LLVM_RELEASE_VERSION}-{LIB_ARCH}-{system_suffix}-release"
     url = f"https://github.com/makslevental/llvm-releases/releases/download/llvm-{LLVM_RELEASE_VERSION}/{name}.tar.xz"
     return url
 
